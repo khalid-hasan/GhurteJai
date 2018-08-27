@@ -55,6 +55,8 @@ if(isset($_POST['submit'])){
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
+	<link rel="stylesheet" href="Admin/dist/css/public.css" />
+	
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 	
 	<!-- Animate.css -->
