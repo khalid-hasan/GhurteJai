@@ -40,7 +40,33 @@ function data_sanitization($data)
 if($_SERVER['REQUEST_METHOD']== "POST")
 {
   require 'config.php';
+  $hotel_name_query=mysqli_query($conn, "SELECT title from hotels where hotel_id= $_SESSION[hotel_id]");
+  $hotel_name= mysqli_fetch_assoc($hotel_name_query);
+  $hotel_title= $hotel_name['title'];
+  
+ 
+  $hotel_room_price_query=mysqli_query($conn, "SELECT price from room_type where hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' ");
+  $room_price= mysqli_fetch_assoc($hotel_room_price_query);
+  $price= $room_price['price'];
+  
+  $room_name_query=mysqli_query($conn, "SELECT room_name from room_type where room_type_id= $_SESSION[room_type_id]");
+  $room_name= mysqli_fetch_assoc($room_name_query);
+  $room_title= $room_name['room_name'];	
+  
+  $tid= 'TRX'.rand(100000, 999999);
+  $to = "ghurtejai18@gmail.com"; // this is your Email address
+  $from = $enq_hotel_email; // this is the sender's Email address
+  $subject = "Confirmation Booking ";
+  $subject2 = "Response from " .$hotel_title. " for booking by GhurteJai.com";
+  $message = " Name: ".$enq_hotel_name. "\n Hotel name: ".$hotel_title."\n User Name: ".$enq_hotel_name." \n Room Type: ".$room_title."\n User email: ".$enq_hotel_email."\n User Phone Number: ".$enq_hotel_phone."\n User Check-In date : ".$enq_hotel_checkin."\n User Check-Out date: ".$enq_hotel_checkout."\n Numbers Of Room: ".$enq_hotel_room."\n Adults: ".$enq_hotel_adult."\n Per Room price $: ".$price."/day\n Payment Method: ".$_POST['options']." \n Transaction ID: ".$tid." \n Total Ammount: $".$enq_hotel_room*$price."";
+  $message2 = "Dear ".$enq_hotel_name. ", \n Thanks for your Booking at ".$hotel_title."\n Name: ".$enq_hotel_name." \n Phone Number: ".$enq_hotel_phone."\n Room Type: ".$room_title."\n Check-In date: ".$enq_hotel_checkin."\n Check-Out date: ".$enq_hotel_checkout."\n Numbers Of Room: ".$enq_hotel_room."\n Adults: ".$enq_hotel_adult."\n Payment Method: ".$_POST['options']." \n Transaction ID: ".$tid." \n Per Room price: $".$price."/Day\n Total Ammount: $".$enq_hotel_room*$price." \n\n Thanks for booking at ".$hotel_title.".\n\n For Further query contact with us.";
 
+  $headers = "From:" . $from;
+  $headers2 = "From:" . $to;
+  mail($to,$subject,$message,$headers);
+  mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
+  //$notifyMsg= "Mail Sent. Thank you " .$enq_hotel_name . ", we will contact you shortly.";
+  // You can also use header('Location: thank_you.php'); to redirect to another page.
 
 
   $statement="insert into hotel_enquiry(hotel_id, room_type_id, name, email, phone, checkin, checkout, total_room, child, adult, message, count, addedBy) values ('$_SESSION[hotel_id]', '$_SESSION[room_type_id]', '$enq_hotel_name', '$enq_hotel_email', '$enq_hotel_phone', '$enq_hotel_checkin', '$enq_hotel_checkout', '$enq_hotel_room', '$enq_hotel_child', '$enq_hotel_adult', '$enq_hotel_message', '$enq_hotel_room', '$addedBy')";
