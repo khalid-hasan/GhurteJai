@@ -39,6 +39,28 @@ if($_SERVER['REQUEST_METHOD']== "POST")
 {
   require 'config.php';
 
+$tour_name_query=mysqli_query($conn, "SELECT title from tours where tour_id= '$_SESSION[tour_id]' ");
+$tour_name= mysqli_fetch_assoc($tour_name_query);
+$tour_title= $tour_name['title'];		                    
+
+$tour_price_query=mysqli_query($conn, "SELECT price from tours where tour_id= '$_SESSION[tour_id]' ");
+$tour_price= mysqli_fetch_assoc($tour_price_query);
+$price= $tour_price['price'];
+  
+  $tid= 'TRX'.rand(100000, 999999);
+  $to = "ghurtejai18@gmail.com"; // this is your Email address
+  $from = $enq_tour_email; // this is the sender's Email address
+  $subject = "Confirmation Booking ";
+  $subject2 = "Response from GhurteJai.com for Tour Booking";
+  $message = " Name: ".$enq_tour_name. "\n User email: ".$enq_tour_email."\n User Phone Number: ".$enq_tour_phone."\n Number of Days: ".$enq_tour_days." day\n Payment Method: ".$_POST['options']." \n Transaction ID: ".$tid."  Total Ammount: $".($enq_tour_child+$enq_tour_adult)*$price."";
+  $message2 = " Name: ".$enq_tour_name. "\n User Phone Number: ".$enq_tour_phone."\n Number of Days: ".$enq_tour_days." day\n Payment Method: ".$_POST['options']." \n Transaction ID: ".$tid."\n Total Ammount: $".($enq_tour_child+$enq_tour_adult)*$price." \n\n Thanks for booking at ".$tour_title."\n\n For Further query contact with us.";
+
+  $headers = "From:" . $from;
+  $headers2 = "From:" . $to;
+  mail($to,$subject,$message,$headers);
+  mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
+  //$notifyMsg= "Mail Sent. Thank you " .$enq_hotel_name . ", we will contact you shortly.";
+  // You can also use header('Location: thank_you.php'); to redirect to another page.
 
 
   $statement="insert into tour_enquiry(tour_id, name, email, phone, days, child, adult, message, addedBy) values ('$_SESSION[tour_id]', '$enq_tour_name', '$enq_tour_email', '$enq_tour_phone', '$enq_tour_days', '$enq_tour_child', '$enq_tour_adult', '$enq_tour_message', '$addedBy')";
