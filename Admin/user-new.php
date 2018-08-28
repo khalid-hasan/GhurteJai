@@ -111,6 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <label for="email">Email address</label>
                   <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required>
                 </div>
+			    <div class="alert alert-primary email-unavailable" role="alert"></div>
                 <div class="form-group">
                   <label for="password">Password</label>
                   <input type="password" class="form-control" id="password" placeholder="Password" name="password" required >
