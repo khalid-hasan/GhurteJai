@@ -10,8 +10,11 @@ function data_sanitization($data)
 if($_SERVER['REQUEST_METHOD']== "POST")
 {
   require 'config.php';
+  $uniqueID = md5(rand() * time());
   $target_dir = "Admin/dist/img/";
-  $target_file = $target_dir . basename($_FILES["user_img"]["name"]);
+  $target_dir_temp = "dist/img/";
+  $target_file = $target_dir .$uniqueID. basename($_FILES["user_img"]["name"]);
+  $target_file_temp = $target_dir_temp .$uniqueID. basename($_FILES["user_img"]["name"]);
   move_uploaded_file($_FILES["user_img"]["tmp_name"], $target_file);
   $username=data_sanitization($_POST['username']);
   $password=data_sanitization($_POST['password']);
@@ -20,7 +23,7 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   $phone=data_sanitization($_POST['phone']);
   $role="Subscriber";
   
-  $statement="insert into users(username,name,password,email,phone,user_role,image) values ('$username','$name', '$password', '$email', '$phone', '$role', '$target_file')";
+  $statement="insert into users(username,name,password,email,phone,user_role,image) values ('$username','$name', '$password', '$email', '$phone', '$role', '$target_file_temp')";
   if(mysqli_query($conn,$statement))
   {
     $notifyMsg="New User Created";
