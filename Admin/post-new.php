@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   else
   {
     $notifyMsg="Unable to add New Post";
-    echo mysqli_error($conn);
+    mysqli_error($conn);
   }
 
   mysqli_close($conn);

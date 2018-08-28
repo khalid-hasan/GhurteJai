@@ -48,6 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Role</th>
+                  <th>Last Modified By</th>
                   <th>Action</th>
                 </tr>
                 <?php
@@ -66,6 +67,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           echo "<td>".$row['email']."</td>";
                           echo "<td>".$row['phone']."</td>";
                           echo "<td>".$row['user_role']."</td>";
+                          echo "<td>".$row['last_modified']."</td>";
                           echo "<td><a href=\"delete-users.php?user=$row[username]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"profile.php?user=$row[username]\">Edit</a></td>";
                           echo "</tr>";
                         }

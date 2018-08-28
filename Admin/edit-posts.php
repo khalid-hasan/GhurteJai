@@ -43,9 +43,9 @@
 
     $cat_idUpdated=data_sanitization($_POST['cat_id']);
 
-    $package_descUpdated=data_sanitization($_POST['package_desc']);
+    $package_descUpdated=mysqli_real_escape_string($conn, $_POST['package_desc']);
 
-   $statement="UPDATE posts SET title= '$package_titleUpdated' , cat_id='$cat_idUpdated', description='$package_descUpdated', image='$image' where post_id= '$_SESSION[post_id]'";
+   $statement="UPDATE posts SET title= '$package_titleUpdated' , cat_id='$cat_idUpdated', description='$package_descUpdated', image='$image', last_modified='$_SESSION[user]' where post_id= '$_SESSION[post_id]'";
 
 
     if(mysqli_query($conn,$statement))

@@ -27,7 +27,7 @@
     $cat_titleUpdated=data_sanitization($_POST['cat_title']);
 
     
-   $statement="UPDATE categories SET title= '$cat_titleUpdated' WHERE cat_id= '$cat_id' ";
+   $statement="UPDATE categories SET title= '$cat_titleUpdated', last_modified='$_SESSION[user]' WHERE cat_id= '$cat_id' ";
 
 
     if(mysqli_query($conn,$statement))

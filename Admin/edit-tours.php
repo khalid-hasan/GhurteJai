@@ -50,7 +50,7 @@
     $package_ownerUpdated=data_sanitization($_POST['package_owner']);
 
     
-   $statement="UPDATE tours SET title= '$package_titleUpdated' , price= '$package_priceUpdated', days='$package_daysUpdated', location='$package_locationUpdated', description='$package_descUpdated', image='$image', capacity='$package_seatUpdated', owner='$package_ownerUpdated' where tour_id= '$_SESSION[tour_id]'";
+   $statement="UPDATE tours SET title= '$package_titleUpdated' , price= '$package_priceUpdated', days='$package_daysUpdated', location='$package_locationUpdated', description='$package_descUpdated', image='$image', capacity='$package_seatUpdated', owner='$package_ownerUpdated', last_modified='$_SESSION[user]' where tour_id= '$_SESSION[tour_id]'";
 
 
     if(mysqli_query($conn,$statement))
