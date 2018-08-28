@@ -26,14 +26,21 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   $duplicate_check=mysqli_query($conn, "SELECT username from users where username='$username' and deletedAt is NULL ");
   $duplicate_count= mysqli_num_rows($duplicate_check);
   
+  
+  $duplicate_check_email=mysqli_query($conn, "SELECT email from users where email='$email' and deletedAt is NULL ");
+  $duplicate_count_email= mysqli_num_rows($duplicate_check);
+  
+  
+  
+  
   $statement="insert into users(username,name,password,email,phone,user_role,image) values ('$username','$name', '$password', '$email', '$phone', '$role', '$target_file_temp')";
-  if($duplicate_count>0)
+  if($duplicate_count>0 && $duplicate_count_email>0)
   {
     $notifyMsg="Duplicate Entry";
   }
   else
   {
-    if(mysqli_query($conn,$statement) && $duplicate_count==0 )
+    if(mysqli_query($conn,$statement) && $duplicate_count==0 && $duplicate_count_email==0)
     {
       move_uploaded_file($_FILES["user_img"]["tmp_name"], $target_file);
       $notifyMsg="New User Created";
