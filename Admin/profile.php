@@ -10,7 +10,6 @@
     include("config.php");
 
   $user = $_GET['user'];
-  $_SESSION['user']= $user;
 
   $result = mysqli_query($conn, "select * from users WHERE username='$user' ");
 
@@ -42,16 +41,14 @@
     $emailUpdated=data_sanitization($_POST['email']);
     $phoneUpdated=data_sanitization($_POST['phone']);
     $roleUpdated=data_sanitization($_POST['user_role']);
-    $user= $_SESSION['user'];
-    $uri= "profile.php?user=$user";
 
     if (empty($passwordUpdated)) 
     {
-        $statement="UPDATE users SET username= '$usernameUpdated' , name='$nameUpdated', email='$emailUpdated', phone='$phoneUpdated', user_role='$roleUpdated', image='$image' where username= '$usernameUpdated'";
+        $statement="UPDATE users SET username= '$usernameUpdated' , name='$nameUpdated', email='$emailUpdated', phone='$phoneUpdated', user_role='$roleUpdated', image='$image', last_modified='$_SESSION[user]' where username= '$usernameUpdated'";
     }
     else
     {
-        $statement="UPDATE users SET username= '$usernameUpdated' , name='$nameUpdated', password= '$passwordUpdated', email='$emailUpdated', phone='$phoneUpdated', user_role='$roleUpdated', image='$image' where username= '$usernameUpdated'";
+        $statement="UPDATE users SET username= '$usernameUpdated' , name='$nameUpdated', password= '$passwordUpdated', email='$emailUpdated', phone='$phoneUpdated', user_role='$roleUpdated', image='$image', last_modified='$_SESSION[user]' where username= '$usernameUpdated'";
     }
 
     if(mysqli_query($conn,$statement))
@@ -135,15 +132,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="<?php echo empty($phoneUpdated) ? $phone : $phoneUpdated ?> ">
                 </div>
 
+<?php if($_SESSION["user_role"]=="Admin")
+{?>
                 <div class="form-group">
                   <label>User Role</label>
                   <select class="form-control" name="user_role">
                     <option value="">-SELECT-</option>
                     <option value="Admin" <?php echo empty($roleUpdated) ? ($user_role=="Admin" ? "selected" : "") : ($roleUpdated=="Admin" ? "selected" : "")  ?> >Admin</option>
                     <option value="Subscriber" <?php echo empty($roleUpdated) ? ($user_role=="Subscriber" ? "selected" : "") : ($roleUpdated=="Subscriber" ? "selected" : "")  ?> >Subscriber</option>
-                    <option value="Owner" <?php echo empty($roleUpdated) ? ($user_role=="Owner" ? "selected" : "") : ($roleUpdated=="Owner" ? "selected" : "")  ?> >Subscriber</option>
+                    <option value="Owner" <?php echo empty($roleUpdated) ? ($user_role=="Owner" ? "selected" : "") : ($roleUpdated=="Owner" ? "selected" : "")  ?> >Owner</option>
                   </select>
                 </div>
+<?php }?>
                 <div class="form-group">
                   <label for="user-img">Upload Your Photo</label>
                   <input type="file" id="user-img" name="user_img">

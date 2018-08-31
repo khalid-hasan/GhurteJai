@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>All Users</title>
+  <title>All Categories</title>
 
 <?php include 'header.php';?>
 
@@ -37,24 +37,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">All Users</h3>
+              <h3 class="box-title">All Categories</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
-                  <th>Username</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Role</th>
-                  <th>Last Modified By</th>
+                  <th>ID</th>
+                  <th>Categories</th>
                   <th>Action</th>
                 </tr>
                 <?php
                     require 'config.php';
 
-                    $statement="select * from users where deletedAt is null order by username asc";
+                    $statement="select * from categories where deletedAt is null order by cat_id asc";
                     $result = mysqli_query($conn, $statement);
 
                     if (mysqli_num_rows($result) > 0)
@@ -62,13 +58,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         while($row = mysqli_fetch_assoc($result))
                         {
                           echo "<tr>"; 
-                          echo "<td>".$row['username']."</td>";
-                          echo "<td>".$row['name']."</td>";
-                          echo "<td>".$row['email']."</td>";
-                          echo "<td>".$row['phone']."</td>";
-                          echo "<td>".$row['user_role']."</td>";
-                          echo "<td>".$row['last_modified']."</td>";
-                          echo "<td><a href=\"delete-users.php?user=$row[username]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"profile.php?user=$row[username]\">Edit</a></td>";
+                          echo "<td>".$row['cat_id']."</td>";
+                          echo "<td>".$row['title']."</td>";
+                          echo "<td><a href=\"delete-categories.php?cat_id=$row[cat_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-categories.php?cat_id=$row[cat_id]\">Edit</a></td>";
                           echo "</tr>";
                         }
                     }

@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>ID</th>
                   <th>Catagory ID</th>
                   <th>Title</th>
-               
+                  <th>Last Modified By</th>
                   <th>Action</th>
                 </tr>
                 <?php
@@ -65,6 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo "<td>".$row['post_id']."</td>";
                             echo "<td>".$row['cat_id']."</td>";
                             echo "<td>".$row['title']."</td>";
+                            echo "<td>".$row['last_modified']."</td>";
                          //   echo "<td>".$row['description']."</td>";
                             echo "<td><a href=\"delete-posts.php?post_id=$row[post_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-posts.php?post_id=$row[post_id]\">Edit</a> | <a href=\"..\post-view.php?post_id=$row[post_id]\">View</a></td>";
                             echo "</tr>";
@@ -88,6 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo "<td>".$row['post_id']."</td>";
                             echo "<td>".$row['cat_id']."</td>";
                             echo "<td>".$row['title']."</td>";
+                            echo "<td>".$row['last_modified']."</td>";
                          //   echo "<td>".$row['description']."</td>";
                             echo "<td><a href=\"delete-posts.php?post_id=$row[post_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-posts.php?post_id=$row[post_id]\">Edit</a> | <a href=\"..\post-view.php?post_id=$row[post_id]\">View</a></td>";
                             echo "</tr>";

@@ -50,6 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Capacity</th>
                   <th>Available</th>
                   <th>Description</th>
+                  <th>Last Modified By</th>
                   <th>Action</th>
                 </tr>
                 <?php
@@ -71,7 +72,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo "<td>".$row['price']."</td>";
                             echo "<td>".$row['capacity']."</td>";
                             echo "<td>".$row['available']."</td>";
-                            echo "<td width=\"45%\">".$row['room_desc']."</td>";
+                            echo "<td width=\"35%\">".$row['room_desc']."</td>";
+                            echo "<td>".$row['last_modified']."</td>";
                             echo "<td><a href=\"delete-room-types.php?room_type_id=$row[room_type_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-room-types.php?room_type_id=$row[room_type_id]\">Edit</a></td>";
                             echo "</tr>";
                           }
@@ -97,7 +99,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo "<td>".$row['price']."</td>";
                             echo "<td>".$row['capacity']."</td>";
                             echo "<td>".$row['available']."</td>";
-                            echo "<td width=\"45%\">".$row['room_desc']."</td>";
+                            echo "<td width=\"35%\">".$row['room_desc']."</td>";
+                            echo "<td>".$row['last_modified']."</td>";                            
                             echo "<td><a href=\"delete-room-types.php?room_type_id=$row[room_type_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-room-types.php?room_type_id=$row[room_type_id]\">Edit</a></td>";
                             echo "</tr>";
                           }

@@ -1,43 +1,35 @@
 <?php
     if(!isset($_SESSION)) { session_start(); }
 	function data_sanitization($data)
-  {
+   {
 	$data= trim($data);
 	$data= stripcslashes($data);
 	$data= htmlspecialchars($data);
 	return $data;
-  }
+   }
     require("config.php");
 
-  $cat_id = $_GET['cat_id'];
-  $_SESSION['cat_id']= $cat_id;
 
-  $result = mysqli_query($conn, "select * from categories WHERE cat_id='$cat_id' ");
-
-  while($res = mysqli_fetch_array($result))
-  {
-    $cat_title= $res['title'];
-  }
 
   if($_SERVER['REQUEST_METHOD']== "POST")
   {
     require 'config.php';
 
+    $cat_title=data_sanitization($_POST['cat_title']);
 
-    $cat_titleUpdated=data_sanitization($_POST['cat_title']);
+
 
     
-   $statement="UPDATE categories SET title= '$cat_titleUpdated', last_modified='$_SESSION[user]' WHERE cat_id= '$cat_id' ";
-
+  $statement="insert into categories(title) values ('$cat_title')";
 
     if(mysqli_query($conn,$statement))
     {
-        $notifyMsg="Categories Updated";
+        $notifyMsg="Catagories Updated";
         //header("location: $uri");
     }
     else
     {
-        $notifyMsg="Unable To Update Categories";
+        $notifyMsg="Unable To Update Package";
         mysqli_error($conn);
     }
 
@@ -53,7 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Edit Categories</title>
+  <title>Add Categories</title>
 
 <?php include 'header.php';?>
 
@@ -86,19 +78,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" name="categories-edit" method="post" action="" enctype="multipart/form-data">
+            <form role="form" name="package-new" method="post" action="" enctype="multipart/form-data">
               <div class="box-body">
 
                 <div class="form-group">
-                  <label>Categories Name</label>
-                  <input type="text" class="form-control" id="cat-title" placeholder="Category Name" name="cat_title" value="<?php echo empty($cat_titleUpdated) ? $cat_title : $cat_titleUpdated ?>" required>
-                </div> 
+                  <label>Category Name</label>
+                  <input type="text" class="form-control" id="cat-title" placeholder="Category Name" name="cat_title" required>
+                </div>    
+
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
 
-              <div class="error">
+               <div class="error">
                  <?php
 
                    if (!empty($notifyMsg)) 
@@ -109,7 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  ?>
               </div>
 
-                <button type="submit" class="btn btn-primary">UPDATE</button>
+                <button type="submit" class="btn btn-primary">ADD</button>
               </div>
             </form>
           </div>
