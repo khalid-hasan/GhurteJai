@@ -139,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <select class="form-control" name="user_role">
                     <option value="">-SELECT-</option>
                     <option value="Admin" <?php echo empty($roleUpdated) ? ($user_role=="Admin" ? "selected" : "") : ($roleUpdated=="Admin" ? "selected" : "")  ?> >Admin</option>
-                    <option value="Subscriber" <?php echo empty($roleUpdated) ? ($user_role=="Subscriber" ? "selected" : "") : ($roleUpdated=="Subscriber" ? "selected" : "")  ?> >Subscriber</option>
+                    <option value="user" <?php echo empty($roleUpdated) ? ($user_role=="user" ? "selected" : "") : ($roleUpdated=="user" ? "selected" : "")  ?> >user</option>
                     <option value="Owner" <?php echo empty($roleUpdated) ? ($user_role=="Owner" ? "selected" : "") : ($roleUpdated=="Owner" ? "selected" : "")  ?> >Owner</option>
                   </select>
                 </div>

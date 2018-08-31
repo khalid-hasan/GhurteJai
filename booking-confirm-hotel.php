@@ -69,11 +69,15 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   // You can also use header('Location: thank_you.php'); to redirect to another page.
 
 
-  $statement="insert into hotel_enquiry(hotel_id, room_type_id, name, email, phone, checkin, checkout, total_room, child, adult, message, count, addedBy) values ('$_SESSION[hotel_id]', '$_SESSION[room_type_id]', '$enq_hotel_name', '$enq_hotel_email', '$enq_hotel_phone', '$enq_hotel_checkin', '$enq_hotel_checkout', '$enq_hotel_room', '$enq_hotel_child', '$enq_hotel_adult', '$enq_hotel_message', '$enq_hotel_room', '$addedBy')";
+  $statement="insert into hotel_enquiry(hotel_id, room_type_id, name, email, phone, checkin, checkout, total_room, child, adult, message, count,count1, addedBy) values ('$_SESSION[hotel_id]', '$_SESSION[room_type_id]', '$enq_hotel_name', '$enq_hotel_email', '$enq_hotel_phone', '$enq_hotel_checkin', '$enq_hotel_checkout', '$enq_hotel_room', '$enq_hotel_child', '$enq_hotel_adult', '$enq_hotel_message', '$enq_hotel_room','$enq_hotel_room', '$addedBy')";
 
-$room_available_query=mysqli_query($conn, "SELECT available FROM room_type WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' and deletedAt is NULL ");
+$room_available_query=mysqli_query($conn, "SELECT * FROM room_type WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' and deletedAt is NULL ");
+
 $room_available= mysqli_fetch_assoc($room_available_query);
 $available= $room_available['available'];
+$favailable= $room_available['favailable'];
+
+
 
   if(mysqli_query($conn,$statement))
   {
@@ -86,13 +90,66 @@ $available= $room_available['available'];
   }	
   
   $update_available_room= $available-$enq_hotel_room;
+  $update_available_room_f= $favailable+$enq_hotel_room;
+
+
+  
+  $statement1="SELECT * FROM hotel_enquiry WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' and checkout='$_SESSION[enq_hotel_checkin]' and deletedAt is NULL";
+
+  $result = mysqli_query($conn, $statement1);
+
+  if (mysqli_num_rows($result) > 0)
+   {
+         while($row = mysqli_fetch_assoc($result))
+		 {
+		  $checkout_time= $row['checkout'];
+
+    	 	//$update_available= $row['available'] + $row['count'];
+		var_dump($checkout_time);
+		if($available<=0 && $checkout_time=$_SESSION['enq_hotel_checkin'] )
+         {
+             $update_available_room_query= "UPDATE room_type,hotel_enquiry SET room_type.available='$update_available_room',room_type.favailable= '$update_available_room_f',hotel_enquiry.flag='1' WHERE room_type.hotel_id= '$_SESSION[hotel_id]' and room_type.room_type_id= '$_SESSION[room_type_id]' and hotel_enquiry.hotel_id= '$_SESSION[hotel_id]' and hotel_enquiry.room_type_id= '$_SESSION[room_type_id]' and hotel_enquiry.checkout='$_SESSION[enq_hotel_checkin]' "; 	
+  	         mysqli_query($conn, $update_available_room_query);  
+         }
+    	 	 // $flag= 0;
+
+       	     // $update_flag= "UPDATE hotel_enquiry SET flag= '$flag' WHERE hotel_id= '$row[hotel_id]' and room_type_id= '$row[room_type_id]' "; 	
+  		     // mysqli_query($conn, $update_flag); 
+
+    	 // if($_SESSION['enq_hotel_checkin']== $checkout_time)
+    	 // {
+    	 	//$update_available= $row['available'] + $row['count'];
+
+    	 	//$count= 0;
+			// $flag=1;
+
+       	    // $update_flag= "UPDATE hotel_enquiry SET flag='$flag' WHERE hotel_id= '$row[hotel_id]' and room_type_id= '$row[room_type_id]' "; 	
+  		    // mysqli_query($conn, $update_count);     	 		
+
+
+    	 	// if($update_available <= $row['capacity'])
+    	 	// {
+      	 		// $update_available_room_query= "UPDATE room_type SET available= '$update_available' WHERE hotel_id= '$row[hotel_id]' and room_type_id= '$row[room_type_id]' "; 	
+  				// mysqli_query($conn, $update_available_room_query);   	 		
+    	 	// }
+    	 // }			
+		 }
+   }
+
+  
 
   if($available>=0)
-  {
-  	$update_available_room_query= "UPDATE room_type SET available= '$update_available_room' WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' "; 	
-  	mysqli_query($conn, $update_available_room_query);
+   {  
+     $update_available_room_query= "UPDATE room_type SET available= '$update_available_room' WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' "; 	
+  	 mysqli_query($conn, $update_available_room_query);
+   }
+  // elseif($available<=0 && $checkout_time=$_SESSION['enq_hotel_checkin'] )
+   // {
+     // $update_available_room_query= "UPDATE room_type SET available='$update_available_room',favailable= '$update_available_room_f' WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' "; 	
+  	 // mysqli_query($conn, $update_available_room_query);  
+   // }
   }
-}
+
 
 ?>
 <!DOCTYPE HTML>
