@@ -55,5 +55,23 @@
   });
 });
 </script>
+    <script type="text/javascript">
+    $(".email-unavailable").css("display", "none");
+    $(document).ready(function() {
+    $('#email').keyup(function() {
+    var value = $(this).val();
+    
+    $.ajax({
+      type: 'post',
+      url: 'email_available_check.php',
+      data: {'email' : value},
+      success: function(r) {
+        $('.email-unavailable').html(r);
+        $(".email-unavailable").css("display", "");
+       }
+      });
+      });
+      });
+    </script>
 </body>
 </html>
