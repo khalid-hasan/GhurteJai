@@ -21,36 +21,18 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   $name=data_sanitization($_POST['name']);
   $email=data_sanitization($_POST['email']);
   $phone=data_sanitization($_POST['phone']);
-  $role="Subscriber";
-  
-  $duplicate_check=mysqli_query($conn, "SELECT username from users where username='$username' and deletedAt is NULL ");
-  $duplicate_count= mysqli_num_rows($duplicate_check);
-  
-  
-  $duplicate_check_email=mysqli_query($conn, "SELECT email from users where email='$email' and deletedAt is NULL ");
-  $duplicate_count_email= mysqli_num_rows($duplicate_check);
-  
-  
-  
+  $role="user";
   
   $statement="insert into users(username,name,password,email,phone,user_role,image) values ('$username','$name', '$password', '$email', '$phone', '$role', '$target_file_temp')";
-  if($duplicate_count>0 && $duplicate_count_email>0)
+  if(mysqli_query($conn,$statement))
   {
-    $notifyMsg="Duplicate Entry";
+    $notifyMsg="New User Created";
   }
   else
   {
-    if(mysqli_query($conn,$statement) && $duplicate_count==0 && $duplicate_count_email==0)
-    {
-      move_uploaded_file($_FILES["user_img"]["tmp_name"], $target_file);
-      $notifyMsg="New User Created";
-    }
-    else
-    {
-      $notifyMsg="Unable to create New User"; 
-    }
-  } 
-
+    $notifyMsg="Unable to create New User";
+    mysqli_error($conn);
+  }
   mysqli_close($conn);
 }
 ?>
@@ -59,7 +41,7 @@ if($_SERVER['REQUEST_METHOD']== "POST")
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Subscriber Registrarion</title>
+	<title>User Registrarion</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -150,7 +132,7 @@ if($_SERVER['REQUEST_METHOD']== "POST")
 							<div class="col-md-12">
 								<div class="wrap-division">
 									<div class="col-md-12 col-md-offset-0 heading2 animate-box">
-										<h2>Subscriber Register</h2>
+										<h2>User Register</h2>
 									</div>
 									<div class="row">	
 										<div class="col-md-12 animate-box">
@@ -163,18 +145,16 @@ if($_SERVER['REQUEST_METHOD']== "POST")
 									                </div>
 										            <div class="form-group">
 									                  <label>User Name</label>
-									                  <input type="text" class="form-control" id="username" placeholder="Your user Name" name="username" value=""required pattern="^([a-zA-Z\s'-]+\.)*[a-zA-Z\s'-]+$" title="Please Enter Your Name">
+									                  <input type="text" class="form-control" id="sub-input" placeholder="Your user Name" name="username" value=""required pattern="^([a-zA-Z\s'-]+\.)*[a-zA-Z\s'-]+$" title="Please Enter Your Name">
 									                </div>
-													<div class="alert alert-primary username-unavailable" role="alert"></div>
 										            <div class="form-group">
 									                  <label>Enter your New Password</label>
 									                  <input type="password" class="form-control" id="sub-input" placeholder="Enter Your New password" name="password" value="">
 									                </div>
 									                <div class="form-group">
 									                  <label>Email</label>
-									                  <input type="email" class="form-control" id="email" placeholder="Your Email" name="email" value="">
+									                  <input type="email" class="form-control" id="sub-input" placeholder="Your Email" name="email" value="">
 									                </div>
-                                                    <div class="alert alert-primary email-unavailable" role="alert"></div>
 									                <div class="form-group">
 									                  <label>Phone</label>
 									                  <input type="text" class="form-control" id="sub-input" placeholder="Your Phone Number" name="phone" value=""required pattern="^[0-9]{3,15}$" title="Enter Your Phone Number">
@@ -245,62 +225,19 @@ if($_SERVER['REQUEST_METHOD']== "POST")
 
 	<!-- Main -->
 	<script src="js/main.js"></script>
-	
-	
-	<script type="text/javascript">
-    $(".username-unavailable").css("display", "none");
-    $(document).ready(function() {
-    $('#username').keyup(function() {
-    var value = $(this).val();
-    
-    $.ajax({
-      type: 'post',
-      url: 'user_available_check.php',
-      data: {'username' : value},
-      success: function(r) {
-        $('.username-unavailable').html(r);
-        $(".username-unavailable").css("display", "");
-                            }
-      });
-      });
-      });
-    </script>
-	
-    <script type="text/javascript">
-    $(".email-unavailable").css("display", "none");
-    $(document).ready(function() {
-    $('#email').keyup(function() {
-    var value = $(this).val();
-    
-    $.ajax({
-      type: 'post',
-      url: 'email_available_check.php',
-      data: {'email' : value},
-      success: function(r) {
-        $('.email-unavailable').html(r);
-        $(".email-unavailable").css("display", "");
-                            }
-      });
-      });
-      });
-    </script>
 
-   <script type="text/javascript">
-   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-   var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-   s1.async=true;
-   s1.src='https://embed.tawk.to/5b82fb9aafc2c34e96e7eb01/default';
-   s1.charset='UTF-8';
-   s1.setAttribute('crossorigin','*');
-   s0.parentNode.insertBefore(s1,s0);
-   })();
-   </script>
-   <!--End of Tawk.to Script-->
-
-
-
-
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5b82fb9aafc2c34e96e7eb01/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 
 	</body>
 </html>
