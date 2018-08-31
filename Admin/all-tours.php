@@ -48,6 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>Location</th>
                   <th>Price</th>
                   <th>Days</th>
+                  <th>Last Modified By</th>
                   <th>Action</th>
                 </tr>
                 <?php
@@ -68,6 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo "<td>".$row['location']."</td>";
                             echo "<td>".$row['price']."</td>";
                             echo "<td>".$row['days']."</td>";
+                            echo "<td>".$row['last_modified']."</td>";
                             echo "<td><a href=\"delete-tours.php?tour_id=$row[tour_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-tours.php?tour_id=$row[tour_id]\">Edit</a> | <a href=\"http://localhost/travel/tour-place.php?tour_id=$row[tour_id]\">View</a></td>";
                             echo "</tr>";
                           }
@@ -92,6 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo "<td>".$row['location']."</td>";
                             echo "<td>".$row['price']."</td>";
                             echo "<td>".$row['days']."</td>";
+                            echo "<td>".$row['last_modified']."</td>";
                             echo "<td><a href=\"delete-tours.php?tour_id=$row[tour_id]\" onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a> | <a href=\"edit-tours.php?tour_id=$row[tour_id]\">Edit</a> | <a href=\"http://localhost/travel/tour-place.php?tour_id=$row[tour_id]\">View</a></td>";
                             echo "</tr>";
                           }

@@ -44,7 +44,7 @@
     $hotel_ownerUpdated=data_sanitization($_POST['hotel_owner']);
 
     
-   $statement="UPDATE hotels SET title= '$hotel_titleUpdated' , location='$hotel_locationUpdated', image='$image', hotel_desc='$hotel_descUpdated', owner= '$hotel_ownerUpdated' where hotel_id= '$_SESSION[hotel_id]'";
+   $statement="UPDATE hotels SET title= '$hotel_titleUpdated' , location='$hotel_locationUpdated', image='$image', hotel_desc='$hotel_descUpdated', owner= '$hotel_ownerUpdated', last_modified='$_SESSION[user]' where hotel_id= '$_SESSION[hotel_id]' ";
 
 
     if(mysqli_query($conn,$statement))

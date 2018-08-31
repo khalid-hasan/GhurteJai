@@ -50,7 +50,7 @@
     $room_availableUpdated=data_sanitization($_POST['room_available']);
 
     
-   $statement="UPDATE room_type SET hotel_id= '$hotel_idUpdated' , room_name='$room_nameUpdated', room_desc='$room_descUpdated', price='$room_priceUpdated', capacity= '$room_capacityUpdated', available='$room_availableUpdated', image='$image' where room_type_id= '$_SESSION[room_type_id]'";
+   $statement="UPDATE room_type SET hotel_id= '$hotel_idUpdated' , room_name='$room_nameUpdated', room_desc='$room_descUpdated', price='$room_priceUpdated', capacity= '$room_capacityUpdated', available='$room_availableUpdated', image='$image', last_modified='$_SESSION[user]' where room_type_id= '$_SESSION[room_type_id]' ";
 
 
   if(mysqli_query($conn,$statement))
@@ -60,6 +60,7 @@
   else
   {
     $notifyMsg="Unable to update New Room Type";  
+    mysqli_error($conn);
   }    
 
     mysqli_close($conn);   
@@ -177,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <option value="Single" <?php echo empty($room_nameUpdated) ? ($room_name=="Single" ? "selected" : "disabled") : ($room_nameUpdated=="Single" ? "selected" : "disabled")  ?> >Single</option>
                     <option value="Double" <?php echo empty($room_nameUpdated) ? ($room_name=="Double" ? "selected" : "disabled") : ($room_nameUpdated=="Double" ? "selected" : "disabled")  ?>>Double</option>
                     <option value="Triple" <?php echo empty($room_nameUpdated) ? ($room_name=="Triple" ? "selected" : "disabled") : ($room_nameUpdated=="Triple" ? "selected" : "disabled")  ?>>Triple</option>
-                    <option value="Quad" <?php echo empty($room_nameUpdated) ? ($room_name=="Quad" ? "selected" : "disabled") : ($room_nameUpdated=="Quad" ? "selected" : "")  ?>>Quad</option>
+                    <option value="Quad" <?php echo empty($room_nameUpdated) ? ($room_name=="Quad" ? "selected" : "disabled") : ($room_nameUpdated=="Quad" ? "selected" : "disabled")  ?>>Quad</option>
                     <option value="Presidential" <?php echo empty($room_nameUpdated) ? ($room_name=="Presidential" ? "selected" : "disabled") : ($room_nameUpdated=="Presidential" ? "selected" : "disabled")  ?>>Presidential</option>
                     <option value="Family" <?php echo empty($room_nameUpdated) ? ($room_name=="Family" ? "selected" : "disabled") : ($room_nameUpdated=="Family" ? "selected" : "disabled")  ?>>Family</option>Triple
                   </select>

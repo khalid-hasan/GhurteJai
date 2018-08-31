@@ -12,8 +12,9 @@ if($_SERVER['REQUEST_METHOD']== "POST")
 {
   require 'config.php';
   
+  $uniqueID = md5(rand() * time());
   $target_dir = "dist/img/";
-  $target_file = $target_dir . basename($_FILES["user_img"]["name"]);
+  $target_file = $target_dir .$uniqueID. basename($_FILES["user_img"]["name"]);
   move_uploaded_file($_FILES["user_img"]["tmp_name"], $target_file);
 
   $cat_id=data_sanitization($_POST['cat_id']);
@@ -30,7 +31,7 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   else
   {
     $notifyMsg="Unable to add New Post";
-    echo mysqli_error($conn);
+    mysqli_error($conn);
   }
 
   mysqli_close($conn);
