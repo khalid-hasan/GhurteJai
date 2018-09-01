@@ -105,7 +105,7 @@ $favailable= $room_available['favailable'];
 		  $checkout_time= $row['checkout'];
 
     	 	//$update_available= $row['available'] + $row['count'];
-		var_dump($checkout_time);
+		//var_dump($checkout_time);
 		if($available<=0 && $checkout_time=$_SESSION['enq_hotel_checkin'] )
          {
              $update_available_room_query= "UPDATE room_type,hotel_enquiry SET room_type.available='$update_available_room',room_type.favailable= '$update_available_room_f',hotel_enquiry.flag='1' WHERE room_type.hotel_id= '$_SESSION[hotel_id]' and room_type.room_type_id= '$_SESSION[room_type_id]' and hotel_enquiry.hotel_id= '$_SESSION[hotel_id]' and hotel_enquiry.room_type_id= '$_SESSION[room_type_id]' and hotel_enquiry.checkout='$_SESSION[enq_hotel_checkin]' "; 	
