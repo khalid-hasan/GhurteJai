@@ -60,7 +60,7 @@ $room_available_query_enq=mysqli_query($conn, "SELECT * FROM hotel_enquiry WHERE
 $room_available_enq= mysqli_fetch_assoc($room_available_query_enq);
 $checkout= $room_available_enq['checkout'];
 
-if($_SESSION['enq_hotel_room'] <= $available && $available>0 ||$available<=0 && $_SESSION['enq_hotel_room'] <= $favailable && $capacity<$favailable    )
+if($_SESSION['enq_hotel_room'] <= $available && $available>0 ||$available<=0 && $_SESSION['enq_hotel_room'] <= $favailable && $capacity<=$favailable    )
 {
     header("Location: booking-confirm-hotel.php");
 }
@@ -169,6 +169,16 @@ else
 						<div class="row">
 							<div class="col-md-12">
 								<div class="wrap-division">
+							    <?php
+
+						        if (!empty($notifyMsg)) 
+						        {
+								echo "<div class=\"alert alert-primary\" role=\"alert\">";
+					            echo "<p><span id=\"error\">$notifyMsg</span></p>";
+			                    echo "</div>";
+				                }
+
+								?>	
 								<?php
 							    require 'config.php';
 
@@ -230,16 +240,7 @@ else
                   									  <textarea class="form-control" rows="3" id="enq-textarea" placeholder="Write Your Message" name="enq_hotel_message" required></textarea>
                   									</div>				
 
-									                 <?php
 
-									                   if (!empty($notifyMsg)) 
-									                   {
-									                   	echo "<div class=\"alert alert-primary\" role=\"alert\">";
-									                    echo "<p><span id=\"error\">$notifyMsg</span></p>";
-									                    echo "</div>";
-									                   }
-
-									                 ?>	
 
                   									<button type="submit" class="btn btn-primary">SUBMIT</button>
                   								   </form>

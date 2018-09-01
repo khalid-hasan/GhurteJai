@@ -17,7 +17,7 @@ $favailable= $result['favailable'];
 $resultCount = intval($numResults);*/
 
 
-if($required_room > $available && $available>0 || $available<=0 && $required_room > $favailable && $capacity<$favailable ){
+if($required_room > $available && $available>=0 || $available<=0 && $required_room > $favailable && $capacity<$favailable ){
     echo "Sorry. No more rooms available.";
 }
 else

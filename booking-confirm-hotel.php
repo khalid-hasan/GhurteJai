@@ -69,7 +69,7 @@ if($_SERVER['REQUEST_METHOD']== "POST")
   // You can also use header('Location: thank_you.php'); to redirect to another page.
 
 
-  $statement="insert into hotel_enquiry(hotel_id, room_type_id, name, email, phone, checkin, checkout, total_room, child, adult, message, count,count1, addedBy) values ('$_SESSION[hotel_id]', '$_SESSION[room_type_id]', '$enq_hotel_name', '$enq_hotel_email', '$enq_hotel_phone', '$enq_hotel_checkin', '$enq_hotel_checkout', '$enq_hotel_room', '$enq_hotel_child', '$enq_hotel_adult', '$enq_hotel_message', '$enq_hotel_room','$enq_hotel_room', '$addedBy')";
+  $statement="insert into hotel_enquiry(hotel_id, room_type_id, name, email, phone, checkin, checkout, total_room, child, adult, message, count, addedBy) values ('$_SESSION[hotel_id]', '$_SESSION[room_type_id]', '$enq_hotel_name', '$enq_hotel_email', '$enq_hotel_phone', '$enq_hotel_checkin', '$enq_hotel_checkout', '$enq_hotel_room', '$enq_hotel_child', '$enq_hotel_adult', '$enq_hotel_message', '$enq_hotel_room', '$addedBy')";
 
 $room_available_query=mysqli_query($conn, "SELECT * FROM room_type WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' and deletedAt is NULL ");
 
@@ -247,6 +247,14 @@ $favailable= $room_available['favailable'];
 						<div class="row">
 							<div class="col-md-12">
 								<div class="wrap-division">
+			                    <?php
+						        if (!empty($notifyMsg)) 
+			                    {
+	     	                   	echo "<div class=\"alert alert-primary\" role=\"alert\">";
+			                    echo "<p><span id=\"error\">$notifyMsg</span></p>";
+						        echo "</div>";
+								}
+								?>	
 								<?php
 							    require 'config.php';
 
