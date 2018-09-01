@@ -24,10 +24,11 @@
         }
         else
         {
-            $error="Invalid Username/Password";
+		  $notifyMsg="Wrong User Name or Password";
+		  mysqli_error($conn);
         }
-
     }
+
 
 ?>
 
@@ -39,7 +40,8 @@
 	  <h3>Ghurte Jai</h3>
     </div>
 
-    <div class="container login-panel">
+
+    <div class="container login-panel">	
       <label for="uname"><b>Username</b></label>
       <input type="text" id="uname" placeholder="Enter Username" name="uname" required>
 
@@ -56,4 +58,13 @@
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
   </form>
+
 </div>
+ <?php
+ if (!empty($notifyMsg)) 
+	 {
+		 echo "<div class=\"alert alert-primary\" role=\"alert\">";
+		 echo "<p><span id=\"error\">$notifyMsg</span></p>";
+		 echo "</div>";
+		 }
+		 ?>	
