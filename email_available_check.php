@@ -18,7 +18,7 @@ else if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.
 }
 else
 {
-	echo "Email Available";
+	echo "Valid Email";
 }
 
 ?>

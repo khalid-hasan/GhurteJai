@@ -246,15 +246,7 @@ $favailable= $room_available['favailable'];
 					<div class="col-md-9">
 						<div class="row">
 							<div class="col-md-12">
-								<div class="wrap-division">
-			                    <?php
-						        if (!empty($notifyMsg)) 
-			                    {
-	     	                   	echo "<div class=\"alert alert-primary\" role=\"alert\">";
-			                    echo "<p><span id=\"error\">$notifyMsg</span></p>";
-						        echo "</div>";
-								}
-								?>	
+								<div class="wrap-division">	
 								<?php
 							    require 'config.php';
 
