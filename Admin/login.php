@@ -33,7 +33,14 @@
 ?>
 
 <div id="id01" class="modal">
-  
+ <?php
+   if (!empty($notifyMsg)) 
+	 {
+	 echo "<div class=\"alert alert-primary\" role=\"alert\">";
+	 echo "<p><span id=\"error\">$notifyMsg</span></p>";
+	 echo "</div>";
+	}
+ ?>	
   <form class="modal-content animate" method="post" action="">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -58,13 +65,7 @@
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
   </form>
+  
 
 </div>
- <?php
- if (!empty($notifyMsg)) 
-	 {
-		 echo "<div class=\"alert alert-primary\" role=\"alert\">";
-		 echo "<p><span id=\"error\">$notifyMsg</span></p>";
-		 echo "</div>";
-		 }
-		 ?>	
+

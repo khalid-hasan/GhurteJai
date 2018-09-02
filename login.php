@@ -151,7 +151,17 @@
 									                <div class="form-group">
 									                  <label>Password</label>
 									                  <input type="password" class="form-control" id="enq-input" placeholder="Your Password" name="pwd" value="">
-									                </div>			
+									                </div>
+									                 <?php
+
+									                   if (!empty($notifyMsg)) 
+									                   {
+									                   	echo "<div class=\"alert alert-primary\" role=\"alert\">";
+									                    echo "<p><span id=\"error\">$notifyMsg</span></p>";
+									                    echo "</div>";
+									                   }
+
+									                 ?>														
                   									<button type="submit" class="btn btn-primary">Login</button>
                   									<button type="button" onclick="location.href='register.php'" class="btn btn-primary" value="register">Register</button>
                   								   </form>

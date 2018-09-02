@@ -14,7 +14,8 @@
 						<li class="<?php echo basename($_SERVER['PHP_SELF'])=="about.php" ? "active" : "" ?>"><a href="about.php">About</a></li>
 						<li class="<?php echo basename($_SERVER['PHP_SELF'])=="contact.php" ? "active" : "" ?>"><a href="contact.php">Contact</a></li>
 						<?php
-			                $login= "<li id=\"id01\"><a href=\"#\" onclick=\"document.getElementById('id01').style.display='block'\" style=\"width:auto;\" >Login</a></li>";
+			            //  $login= "<li id=\"id01\"><a href=\"#\" onclick=\"document.getElementById('id01').style.display='block'\" style=\"width:auto;\" >Login</a></li>";
+			                $login= "<li id=\"id01\"><a href=\"login.php\">Login</a></li>";
 			                $logout= "<li><a href=\"Admin/logout.php\">Logout</a></li>";
 
         					echo isset($_SESSION['user']) ? $logout : $login;
