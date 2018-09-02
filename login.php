@@ -8,7 +8,7 @@
     {
         $username= $_POST['uname'];
         $password= $_POST['pwd'];
-        $error="";
+        $error="Wrong user name";
         $sql = "SELECT * from users where username= '$username' and password= '$password' ";
         $res = mysqli_query($conn, $sql);
         $row= mysqli_fetch_assoc($res);
@@ -34,7 +34,8 @@
         }
         else
         {
-            $error="Invalid Username/Password";
+		  $notifyMsg="Wrong User Name or Password";
+		  mysqli_error($conn);
         }
 
     }
@@ -151,18 +152,6 @@
 									                  <label>Password</label>
 									                  <input type="password" class="form-control" id="enq-input" placeholder="Your Password" name="pwd" value="">
 									                </div>			
-
-									                 <?php
-
-									                   if (!empty($notifyMsg)) 
-									                   {
-									                   	echo "<div class=\"alert alert-primary\" role=\"alert\">";
-									                    echo "<p><span id=\"error\">$notifyMsg</span></p>";
-									                    echo "</div>";
-									                   }
-
-									                 ?>	
-
                   									<button type="submit" class="btn btn-primary">Login</button>
                   									<button type="button" onclick="location.href='register.php'" class="btn btn-primary" value="register">Register</button>
                   								   </form>

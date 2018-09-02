@@ -50,11 +50,17 @@ if($_SERVER['REQUEST_METHOD']== "POST")
     $_SESSION['post'][$key] = $value;
   }
 
-$room_available_query=mysqli_query($conn, "SELECT available FROM room_type WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' ");
+$room_available_query=mysqli_query($conn, "SELECT * FROM room_type WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' ");
 $room_available= mysqli_fetch_assoc($room_available_query);
 $available= $room_available['available'];
+$favailable=$room_available['favailable'];
+$capacity=$room_available['capacity'];
 
-if($_SESSION['enq_hotel_room'] <= $available)
+$room_available_query_enq=mysqli_query($conn, "SELECT * FROM hotel_enquiry WHERE hotel_id= '$_SESSION[hotel_id]' and room_type_id= '$_SESSION[room_type_id]' ");
+$room_available_enq= mysqli_fetch_assoc($room_available_query_enq);
+$checkout= $room_available_enq['checkout'];
+
+if($_SESSION['enq_hotel_room'] <= $available && $available>0 ||$available<=0 && $_SESSION['enq_hotel_room'] <= $favailable && $capacity<=$favailable    )
 {
     header("Location: booking-confirm-hotel.php");
 }
@@ -163,6 +169,16 @@ else
 						<div class="row">
 							<div class="col-md-12">
 								<div class="wrap-division">
+							    <?php
+
+						        if (!empty($notifyMsg)) 
+						        {
+								echo "<div class=\"alert alert-primary\" role=\"alert\">";
+					            echo "<p><span id=\"error\">$notifyMsg</span></p>";
+			                    echo "</div>";
+				                }
+
+								?>	
 								<?php
 							    require 'config.php';
 
@@ -224,16 +240,7 @@ else
                   									  <textarea class="form-control" rows="3" id="enq-textarea" placeholder="Write Your Message" name="enq_hotel_message" required></textarea>
                   									</div>				
 
-									                 <?php
 
-									                   if (!empty($notifyMsg)) 
-									                   {
-									                   	echo "<div class=\"alert alert-primary\" role=\"alert\">";
-									                    echo "<p><span id=\"error\">$notifyMsg</span></p>";
-									                    echo "</div>";
-									                   }
-
-									                 ?>	
 
                   									<button type="submit" class="btn btn-primary">SUBMIT</button>
                   								   </form>
